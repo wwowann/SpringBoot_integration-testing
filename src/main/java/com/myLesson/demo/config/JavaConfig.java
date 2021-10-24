@@ -12,6 +12,7 @@ public class JavaConfig {
 
     @Bean(name = "devProfile")
     @ConditionalOnProperty(prefix = "com.myLesson.demo", name = "dev", havingValue = "true")
+
     public SystemProfile devProfile() {
         return new DevProfile();
     }
