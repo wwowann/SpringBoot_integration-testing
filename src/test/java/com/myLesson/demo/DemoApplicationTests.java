@@ -1,5 +1,7 @@
 package com.myLesson.demo;
 
+import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.testcontainers.containers.GenericContainer;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class DemoApplicationTests {
 	private static final String HOST  = "http://localhost:";
+	private static final String GET_MAPPING = "/service/profile";
 	@Autowired
 	TestRestTemplate restTemplate;
 	public static GenericContainer<?> applicationDEV = new GenericContainer<>("devapp").
@@ -27,10 +30,10 @@ class DemoApplicationTests {
 
 	@Test
 	void contextLoads() {
-		ResponseEntity<String> devApp = restTemplate.getForEntity(HOST + applicationDEV.getMappedPort(8080), String.class);
-		System.out.println(devApp.getBody() + "Привет от DEV");
-		ResponseEntity<String> prodApp = restTemplate.getForEntity(HOST + applicationPROD.getMappedPort(8081), String.class);
-		System.out.println(prodApp.getBody() + "Привет от PROD");
+		ResponseEntity<String> devApp = restTemplate.getForEntity(HOST + applicationDEV.getMappedPort(8080)+ GET_MAPPING, String.class);
+		Assertions.assertEquals("Current profile is dev", devApp.getBody());
+		ResponseEntity<String> prodApp = restTemplate.getForEntity(HOST + applicationPROD.getMappedPort(8081) + GET_MAPPING, String.class);
+		Assertions.assertEquals("Current profile is production", prodApp.getBody());
 
 	}
 
