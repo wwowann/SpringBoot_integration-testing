@@ -28,9 +28,9 @@ class DemoApplicationTests {
 	@Test
 	void contextLoads() {
 		ResponseEntity<String> devApp = restTemplate.getForEntity(HOST + applicationDEV.getMappedPort(8080), String.class);
-		System.out.println(devApp.getBody());
+		System.out.println(devApp.getBody() + "Привет от DEV");
 		ResponseEntity<String> prodApp = restTemplate.getForEntity(HOST + applicationPROD.getMappedPort(8081), String.class);
-		System.out.println(prodApp.getBody());
+		System.out.println(prodApp.getBody() + "Привет от PROD");
 
 	}
 
